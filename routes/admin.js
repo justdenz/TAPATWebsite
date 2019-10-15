@@ -95,10 +95,10 @@ router.get("/new_announcement", hasSession, (req, res) => {
     res.render("admin_new_announce.hbs")
 })
 
-router.post('/add_announce', upload_announcement.single('pic') ,function(req,res) {
-    
+router.post('/add_announce', upload_announcement.single('pic'), function (req, res) {
+
     let file_path = req.file.path;
-    file_path =  file_path.slice(7)
+    file_path = file_path.slice(7)
 
     Announcement.addAnnouncement(req.body.title, req.body.briefInfo, file_path, req.body.content).then(function () {
         res.send('1')
@@ -200,7 +200,7 @@ router.get("/login", (req, res) => {
     });
 })
 
-router.get("/settings", (req, res) => {
+router.get("/settings", hasSession, (req, res) => {
     res.sendFile('admin_settings.html', {
         root: './public/'
     });
@@ -226,34 +226,33 @@ router.post("/verify_user", urlencoder, (req, res) => {
 
 })
 
-router.post("/verify_password", urlencoder, (req, res) => {
+router.post("/verify_password", hasSession, urlencoder, (req, res) => {
     let current_password = req.body.current_password
     let new_password = req.body.new_password
     let confirm_new_password = req.body.confirm_new_pass
 
-    if(current_password.length + new_password.length + confirm_new_password.length > 0){
-        if(new_password == confirm_new_password){
-            Admin.getAdmin(req.session.username, current_password)
-            .then(admin => {
-                if(admin != null){
-                    Admin.updateAdmin(admin.admin_id, new_password)
-                    .then(res.send("1"))
-                    .catch(err => res.send("error"))
-                }else{
-                    res.send("0")
+
+    if (current_password.length + new_password.length + confirm_new_password.length > 0) {
+        if (new_password == confirm_new_password) {
+
+
+            Admin.getAdminByUsername(req.session.username).then(function (doc) {
+                if (Admin.validPassword(current_password, doc.password, doc.salt)) {
+
+                    Admin.updateAdmin(doc.admin_id, new_password)
+                        .then(res.send("1"))
+                        .catch(err => res.send("error"))
+
+                } else {
+                    res.send('0')
                 }
             })
-            .catch(err => {
-                res.send("error")
-            })
-        }else {
+        } else {
             res.send("unmatch_password")
         }
-    }else{
+    } else {
         res.send("incomplete_requirements")
     }
-    
-
 
 })
 
