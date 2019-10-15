@@ -229,10 +229,12 @@
                 processData: false,
                 contentType: false,
                 success: function(r){
-                    window.location = "/admin/feed"
+                    if(r == 1){
+                        window.location = "/admin/announcements"
+                    }
                 },
                 error: function (e) {
-                    alertify(e)
+                    alertify.error(e)
                 }
             })
         })

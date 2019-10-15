@@ -28,7 +28,7 @@ router.use(session({
 
 /* MUTER STUFFS */
 
-var storage = multer.diskStorage({
+var announcement_storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './uploads/announcements')
     },
@@ -37,22 +37,21 @@ var storage = multer.diskStorage({
     }
 });
 
-const upload = multer({
-    storage: storage
+var initiatiative_storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './uploads/initiatives')
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '.' + file.originalname.split('.').pop())
+    }
 });
 
-
-router.post('/add_announce', upload.single('pic'), function (req, res) {
-    console.log('storage location is ', '/' + req.file.path);
-
-    console.log(req.body.content)
-
-    Feed.addAnnouncement(req.body.title, req.body.briefInfo, req.file.path, req.body.content).then(function () {
-        res.send('1')
-    }).catch(function () {
-        res.send('Unable to add announcement')
-    })
-})
+const upload_announcement = multer({
+    storage: announcement_storage
+});
+const upload_initiative = multer({
+    storage: initiatiative_storage
+});
 
 function hasSession(req, res, next) {
     if (req.session.username == null) {
@@ -70,11 +69,7 @@ router.get("/", hasSession, (req, res) => {
 
 router.get("/announcements", hasSession, (req, res) => {
 
-
-
     Announcement.getAnnouncements().then(function (announcement) {
-
-
         res.render("admin_announce.hbs", {
             announcement: announcement
         })
@@ -100,17 +95,29 @@ router.get("/new_announcement", hasSession, (req, res) => {
     res.render("admin_new_announce.hbs")
 })
 
-router.get("/add_init", hasSession, (req, res) => {
+router.post('/add_announce', upload_announcement.single('pic'), function (req, res) {
+    console.log('storage location is ', '/' + req.file.path);
 
-    let title = req.query.title
-    let briefInfo = req.query.briefInfo
+    console.log(req.body.content)
 
+    Announcement.addAnnouncement(req.body.title, req.body.briefInfo, req.file.path, req.body.content).then(function () {
+        res.send('1')
+    }).catch(function () {
+        res.send('Unable to add announcement')
+    })
+})
 
+router.post("/add_init", upload_initiative.single('pic'), (req, res) => {
 
+    let title = req.body.title
+    let briefInfo = req.body.briefInfo
+    let pic_url = req.file.path
 
-    Initiative.addInitiative(title, briefInfo, null, null)
-
-    res.redirect("/admin/initiatives")
+    Initiative.addInitiative(title, briefInfo, pic_url, null).then(function () {
+        res.send('1')
+    }).catch(function () {
+        res.send('Unable to add initiative')
+    })
 })
 
 router.get("/edit_init", hasSession, (req, res) => {
