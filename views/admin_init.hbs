@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Majestic Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+
+    <script src="/js/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#sidebarDiv').load("../../partials/_sidebar.html");
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:../../partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="navbar-brand-wrapper d-flex justify-content-center">
+                <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+                    <a class="navbar-brand brand-logo" href="../../index.html"><img src="../../images/logo.svg"
+                            alt="logo" /></a>
+                    <a class="navbar-brand brand-logo-mini" href="../../index.html"><img
+                            src="../../images/logo-mini.svg" alt="logo" /></a>
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button"
+                        data-toggle="minimize">
+                        <span class="mdi mdi-sort-variant"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
+                <ul class="navbar-nav navbar-nav-right">
+
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+
+                            <span class="nav-profile-name">Louis Barnett</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item">
+                                <i class="mdi mdi-settings text-primary"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item">
+                                <i class="mdi mdi-logout text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+
+
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+
+
+            <div id="sidebarDiv">
+
+            </div>
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+
+                    <div class="row">
+                        <h1 style="margin: auto; margin-bottom:20px;"> Initatives </h1>
+
+                    </div>
+
+                    <div class="row">
+                        <a href="/admin/new_initiative" style="margin:auto; margin-bottom: 30px;">
+                            <button type="button" class="btn btn-primary btn-icon-text">
+                                <i class="mdi mdi-plus"></i>
+                                New Initiative
+                            </button>
+                        </a>
+
+                    </div>
+
+
+
+                    <!-- Card deck -->
+                    <div class="card-deck" style="margin-left: 0px; margin-right: 0px">
+
+
+                        {{#each init}}
+                        <!-- Card -->
+                        <div class="card" style="max-width: 360px;">
+
+                            <!-- Card image -->
+                            <div class="view overlay">
+                                <img class="card-img-top"
+                                    src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg"
+                                    alt="Card image cap">
+                                <a href="#">
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+
+                            <!-- Card content -->
+                            <div class="card-body">
+
+                                <!-- Title -->
+                                <h4 class="card-title">{{this.title}}</h4>
+                                <!-- Text -->
+                                <p class="card-text">{{this.brief_info}}</p>
+                                <!-- Button -->
+                                <br>
+                                <button class="editBtn btn btn-outline-primary btn-fw"
+                                    data-id="{{this.initiative_id}}">Edit
+                                    Details</button>
+
+
+                            </div>
+
+                        </div>
+
+                        {{/each}}
+
+
+                        <!-- Card -->
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <form id="editform" action="/admin/edit_init">
+            <input type="hidden" name="id" id="editid">
+        </form>
+
+
+
+
+    </div>
+    <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../vendors/base/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            $("button.editBtn").click(function () {
+                $("#editid").val($(this).attr("data-id"))
+                $("#editform").submit()
+            })
+
+        })
+    </script>
+
+    <!-- End custom js for this page-->
+</body>
+
+</html>

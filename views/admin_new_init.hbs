@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Majestic Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../../vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <!-- endinject -->
+    <link rel="shortcut icon" href="../../images/favicon.png" />
+
+    <script src="/js/jquery.min.js"></script>
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#sidebarDiv').load("../../partials/_sidebar.html");
+            $('#footerDiv').load("../../partials/_footer.html");
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:../../partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="navbar-brand-wrapper d-flex justify-content-center">
+                <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+                    <a class="navbar-brand brand-logo" href="../../index.html"><img src="../../images/logo.svg"
+                            alt="logo" /></a>
+                    <a class="navbar-brand brand-logo-mini" href="../../index.html"><img
+                            src="../../images/logo-mini.svg" alt="logo" /></a>
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button"
+                        data-toggle="minimize">
+                        <span class="mdi mdi-sort-variant"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
+                <ul class="navbar-nav navbar-nav-right">
+
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <span class="nav-profile-name">Louis Barnett</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                            aria-labelledby="profileDropdown">
+                            <a class="dropdown-item">
+                                <i class="mdi mdi-settings text-primary"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item">
+                                <i class="mdi mdi-logout text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+
+
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+
+
+            <div id="sidebarDiv">
+
+            </div>
+
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Add new initiative</h4>
+                                <p class="card-description">
+                                    New submissions can be viewed at [website].com/initiatives
+                                </p>
+                                <form class="forms-sample" action="/admin/add_init">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Initiative Title</label>
+                                        <input type="text" class="form-control" name="title" placeholder="Title">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="exampleTextarea1">Brief Information</label>
+                                        <textarea class="form-control" name="briefInfo" rows="4"
+                                            placeholder="Example description"></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Link Annnouncement</label>
+                                        <select class="form-control form-control-lg" id="exampleFormControlSelect1"
+                                            style="text-indent: 15px;">
+                                            <option>None</option>
+                                            <option>Announcement 1</option>
+                                            <option>Announcement 2</option>
+                                            <option>Announcement 3</option>
+                                            <option>Announcement 4</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Photo Upload</label>
+                                        <input type="file" class="file-upload-default">
+                                        <div class="input-group col-xs-12">
+                                            <input type="text" class="form-control file-upload-info" disabled
+                                                placeholder="Upload Image">
+                                            <span class="input-group-append">
+                                                <button class="file-upload-browse btn btn-primary"
+                                                    type="button">Upload</button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary mr-2">Post</button>
+                                    <button class="btn btn-light">Cancel</button>
+                                </form>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+        </div>
+
+
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../../vendors/base/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../../js/off-canvas.js"></script>
+    <script src="../../js/hoverable-collapse.js"></script>
+    <script src="../../js/template.js"></script>
+    <!-- endinject -->
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="../../js/file-upload.js"></script>
+
+
+    <!-- End custom js for this page-->
+</body>
+
+</html>
