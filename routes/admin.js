@@ -45,7 +45,7 @@ router.post('/add_announce', upload.single('pic') ,function(req,res) {
 
     console.log(req.body.content)
 
-    Feed.addAnnouncement(req.body.title, req.body.briefInfo, req.file.path, req.body.content).then(function () {
+    Announcement.addAnnouncement(req.body.title, req.body.briefInfo, req.file.path, req.body.content).then(function () {
         res.send('1')
     }).catch(function () {
         res.send('Unable to add announcement')
