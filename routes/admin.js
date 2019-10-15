@@ -46,8 +46,12 @@ var initiatiative_storage = multer.diskStorage({
     }
 });
 
-const upload_announcement = multer({storage : announcement_storage});
-const upload_initiative = multer({storage : initiatiative_storage});
+const upload_announcement = multer({
+    storage: announcement_storage
+});
+const upload_initiative = multer({
+    storage: initiatiative_storage
+});
 
 function hasSession(req, res, next) {
     if (req.session.username == null) {
@@ -110,7 +114,7 @@ router.post("/add_init", upload_initiative.single('pic'), (req, res) => {
     let pic_url = req.file.path
     pic_url = pic_url.splice(7)
 
-    Initiative.addInitiative(title, briefInfo, pic_url, null).then(function (){
+    Initiative.addInitiative(title, briefInfo, pic_url, null).then(function () {
         res.send('1')
     }).catch(function () {
         res.send('Unable to add initiative')
@@ -208,22 +212,17 @@ router.post("/verify_user", urlencoder, (req, res) => {
     let password = req.body.password
 
     if (username.length == 0) {
-    
         res.send("0")
     }
 
-    Admin.getAdmin(username, password)
-    .then( function (admin) {
-        if (admin != null ){
-            req.session.username = admin.username
+    Admin.getAdminByUsername(username).then(function (doc) {
+        if (Admin.validPassword(password, doc.password, doc.salt)) {
+            req.session.username = doc.username
             res.send("1")
-        }
-        else {
+        } else {
             res.send('0')
         }
     })
-
-
 
 })
 
