@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS `admin`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(999) NOT NULL,
+  `username` varchar(45) NOT NULL,
   `password` varchar(999) NOT NULL,
   PRIMARY KEY (`admin_id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
@@ -108,7 +108,7 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 ALTER TABLE `testdb`.`admin` 
-ADD COLUMN `salt` VARCHAR(45) NOT NULL AFTER `password`;
+ADD COLUMN `salt` VARCHAR(999) NOT NULL AFTER `password`;
 
 
 INSERT INTO `testdb`.`admin` (`admin_id`, `username`, `password`, `salt`) VALUES ('1', 'tapat', '94320fbc5facec02a7b51b4d3950475cb586290a48c38968545bb740ec206b58dd529f0f60a9ad4b2fc2c006764a466403110fea6ebb34878a0d452a3b8649b2', '6877028fa1b6ac7fcb0f568cc10ed815');
