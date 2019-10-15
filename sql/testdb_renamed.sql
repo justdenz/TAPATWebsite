@@ -107,4 +107,9 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+ALTER TABLE `testdb`.`admin` 
+ADD COLUMN `salt` VARCHAR(45) NOT NULL AFTER `password`;
+
+
+INSERT INTO `testdb`.`admin` (`admin_id`, `username`, `password`, `salt`) VALUES ('1', 'tapat', '94320fbc5facec02a7b51b4d3950475cb586290a48c38968545bb740ec206b58dd529f0f60a9ad4b2fc2c006764a466403110fea6ebb34878a0d452a3b8649b2', '6877028fa1b6ac7fcb0f568cc10ed815');
 -- Dump completed on 2019-10-14 17:52:08
