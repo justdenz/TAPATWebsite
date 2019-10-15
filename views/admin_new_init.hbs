@@ -99,7 +99,7 @@
                                 <p class="card-description">
                                     New submissions can be viewed at [website].com/initiatives
                                 </p>
-                                <form class="forms-sample" action="/admin/add_init">
+                                <form class="forms-sample" id="newForm" method="POST" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="exampleInputName1">Initiative Title</label>
                                         <input type="text" class="form-control" name="title" placeholder="Title">
@@ -125,7 +125,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label>Photo Upload</label>
-                                        <input type="file" class="file-upload-default">
+                                        <input type="file" class="file-upload-default" name="pic" accept="image/*" id="file">
                                         <div class="input-group col-xs-12">
                                             <input type="text" class="form-control file-upload-info" disabled
                                                 placeholder="Upload Image">
@@ -177,6 +177,32 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <script src="../../js/file-upload.js"></script>
+
+    <script>
+
+        $("#newForm").submit(function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            
+            $.ajax({
+                url: "/admin/add_init",
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(r){
+                    if(r == 1){
+                        window.location = "/admin/initiatives"
+                    }
+                },
+                error: function (e) {
+                    alertify.error(e)
+                }
+            })
+        })
+
+
+    </script>
 
 
     <!-- End custom js for this page-->
