@@ -37,10 +37,12 @@ var storage = multer.diskStorage({
     }
 });
 
-const upload = multer({storage : storage});
+const upload = multer({
+    storage: storage
+});
 
 
-router.post('/add_announce', upload.single('pic') ,function(req,res) {
+router.post('/add_announce', upload.single('pic'), function (req, res) {
     console.log('storage location is ', '/' + req.file.path);
 
     console.log(req.body.content)
@@ -202,22 +204,17 @@ router.post("/verify_user", urlencoder, (req, res) => {
     let password = req.body.password
 
     if (username.length == 0) {
-    
         res.send("0")
     }
 
-    Admin.getAdmin(username, password)
-    .then( function (admin) {
-        if (admin != null ){
-            req.session.username = admin.username
+    Admin.getAdminByUsername(username).then(function (doc) {
+        if (Admin.validPassword(password, doc.password, doc.salt)) {
+            req.session.username = doc.username
             res.send("1")
-        }
-        else {
+        } else {
             res.send('0')
         }
     })
-
-
 
 })
 
