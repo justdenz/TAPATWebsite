@@ -32,13 +32,12 @@ Admin.getAdmin = async function(username, password){
 
 }
 
-Admin.updateAdmin = async function(username, password){
+Admin.updateAdmin = async function(id, password){
     await Admin.update({
-        username: username,
         password: password
     }, {
         where: {
-            username: username
+            admin_id: id
         }
     })
 }

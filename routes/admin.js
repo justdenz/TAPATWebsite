@@ -224,8 +224,32 @@ router.post("/verify_user", urlencoder, (req, res) => {
 router.post("/verify_password", urlencoder, (req, res) => {
     let current_password = req.body.current_password
     let new_password = req.body.new_password
+    let confirm_new_password = req.body.confirm_new_pass
 
-    console.log(new_password)
+    if(current_password.length + new_password.length + confirm_new_password.length > 0){
+        if(new_password == confirm_new_password){
+            Admin.getAdmin(req.session.username, current_password)
+            .then(admin => {
+                if(admin != null){
+                    Admin.updateAdmin(admin.admin_id, new_password)
+                    .then(res.send("1"))
+                    .catch(err => res.send("error"))
+                }else{
+                    res.send("0")
+                }
+            })
+            .catch(err => {
+                res.send("error")
+            })
+        }else {
+            res.send("unmatch_password")
+        }
+    }else{
+        res.send("incomplete_requirements")
+    }
+    
+
+
 })
 
 router.get("/logout", (req, res) => {
