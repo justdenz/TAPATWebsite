@@ -30,7 +30,7 @@ router.use(session({
 
 var announcement_storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './uploads/announcements')
+        cb(null, 'public/uploads/announcements')
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + '.' + file.originalname.split('.').pop())
@@ -39,7 +39,7 @@ var announcement_storage = multer.diskStorage({
 
 var initiatiative_storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './uploads/initiatives')
+        cb(null, 'public/uploads/initiatives')
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + '.' + file.originalname.split('.').pop())
@@ -92,11 +92,11 @@ router.get("/new_announcement", hasSession, (req, res) => {
 })
 
 router.post('/add_announce', upload_announcement.single('pic') ,function(req,res) {
-    console.log('storage location is ', '/' + req.file.path);
+    
+    let file_path = req.file.path;
+    file_path =  file_path.slice(7)
 
-    console.log(req.body.content)
-
-    Announcement.addAnnouncement(req.body.title, req.body.briefInfo, req.file.path, req.body.content).then(function () {
+    Announcement.addAnnouncement(req.body.title, req.body.briefInfo, file_path, req.body.content).then(function () {
         res.send('1')
     }).catch(function () {
         res.send('Unable to add announcement')
@@ -108,6 +108,7 @@ router.post("/add_init", upload_initiative.single('pic'), (req, res) => {
     let title = req.body.title
     let briefInfo = req.body.briefInfo
     let pic_url = req.file.path
+    pic_url = pic_url.splice(7)
 
     Initiative.addInitiative(title, briefInfo, pic_url, null).then(function (){
         res.send('1')
