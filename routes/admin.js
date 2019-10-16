@@ -112,7 +112,7 @@ router.post("/add_init", upload_initiative.single('pic'), (req, res) => {
     let title = req.body.title
     let briefInfo = req.body.briefInfo
     let pic_url = req.file.path
-    pic_url = pic_url.splice(7)
+    pic_url = pic_url.slice(7)
 
     Initiative.addInitiative(title, briefInfo, pic_url, null).then(function () {
         res.send('1')
