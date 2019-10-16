@@ -172,7 +172,6 @@ router.get("/delete_announce_submit", hasSession, (req, res) => {
 })
 
 
-
 router.get("/edit_init_submit", hasSession, (req, res) => {
     let title = req.query.title
     let briefInfo = req.query.briefInfo
@@ -195,15 +194,11 @@ router.get("/login", (req, res) => {
         })
     }
 
-    res.sendFile('admin_login.html', {
-        root: './public/'
-    });
+    res.render("admin_login.hbs")
 })
 
 router.get("/settings", hasSession, (req, res) => {
-    res.sendFile('admin_settings.html', {
-        root: './public/'
-    });
+    res.render("admin_settings.hbs")
 })
 
 router.post("/verify_user", urlencoder, (req, res) => {
@@ -226,7 +221,7 @@ router.post("/verify_user", urlencoder, (req, res) => {
 
 })
 
-router.post("/verify_password", hasSession, urlencoder, (req, res) => {
+router.post("/change_password_submit", hasSession, urlencoder, (req, res) => {
     let current_password = req.body.current_password
     let new_password = req.body.new_password
     let confirm_new_password = req.body.confirm_new_pass
