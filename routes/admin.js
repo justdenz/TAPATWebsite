@@ -153,7 +153,7 @@ router.get("/edit_announce_submit", hasSession, (req, res) => {
     let briefInfo = req.query.briefInfo
     let id = req.query.id
 
-    Announcement.updateAnnouncement(id, title, briefInfo, null, content).then(function () {
+    Announcement.updateAnnouncement(id, title, briefInfo, null, req.query.content).then(function () {
         res.send('1')
     }).catch(function () {
         res.send('Unable to update announcement')
